@@ -184,6 +184,18 @@ export default createStore({
 
             return response.data.nextPageToken;
         },
+
+
+        async runCustomerScan(context, { vm, params }){
+
+            let customerId = params.customerId;
+
+            var url = 'https://dns-resolver-knfeh53ddq-ey.a.run.app/execute-manual-check?customerId='+customerId;
+
+            var response = await vm.axios.get(url);
+
+            return response;
+        },
     },
 
     modules: {

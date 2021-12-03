@@ -94,7 +94,12 @@
                             type="text" 
                             placeholder="Enter domain name" 
                             v-model="item.value"
-                            style="background:white;padding:12px; border:1px solid rgb(220, 220, 220);margin-top:12px;"
+                            style="
+                                background:white;
+                                padding:12px; 
+                                border:1px solid rgb(220, 220, 220);
+                                margin-top:12px;
+                            "
                         />
                         <div v-else>
                             <div>{{item.value}}</div>
@@ -109,10 +114,13 @@
                             type="text" 
                             placeholder="Enter domain" 
                             v-model="item.value" 
-                            style="background:white;border:1px solid rgb(220, 220, 220);margin-top:12px;"
+                            style="
+                                background:white;
+                                border:1px solid rgb(220, 220, 220);
+                                margin-top:12px;"
                         />
                         <div v-else>
-                            <div>{{item.value}}</div>
+                            <div> {{item.value}} </div>
                         </div>
                     </td>
                     
@@ -325,6 +333,7 @@ export default {
 
             let processedRecord = [];
 
+            
             if(this.actions=='expand'){
 
                 processedRecord = [''];
@@ -411,6 +420,8 @@ export default {
         border-spacing: 0px 2px;
         margin-left: 30px;
         border: none;
+
+        text-align: left;    
     }
 
     tr {
@@ -418,6 +429,7 @@ export default {
     }
 
     td {
+        
         height: inherit;
         white-space:pre;
         padding: 0px 0px;
@@ -493,27 +505,6 @@ export default {
         margin-top: 12px;
     }
 
-    .tab-action {
-        margin-top: auto;
-        line-height: 4px;
-        margin-left: 4px;
-        margin-right: 4px;
-        font-weight: 900;
-        color: white;
-        background: rgb(183, 183, 183);
-        cursor: pointer;
-    }
-
-    .tab-action-selected{
-        margin-top: auto;
-        line-height: 4px;
-        margin-left: 4px;
-        margin-right: 4px;
-        font-weight: 900;
-        color: white;
-        background: #fdaf06e1;
-        cursor: pointer;
-    }
 
     #add-button {
         border:none;

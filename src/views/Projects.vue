@@ -62,8 +62,8 @@ export default {
                 },
                 {
                 'display': 'Test',
-                'name': 'Test',
-                'route': 'test',
+                'name': 'TestLayout',
+                'route': 'test-layout',
                 'description': 'test test test'
                 }
             ]

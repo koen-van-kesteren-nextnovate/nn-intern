@@ -30,8 +30,14 @@
 		<NavBar 
 			v-if="loggedIn === true" 
 		/>
+
 		<router-view 
-			style="grid-row-start: 2;grid-column-start: 2;grid-column-end: 5;"
+			style="
+				grid-row-start: 2;
+				grid-column-start: 2;
+				grid-column-end: 5;
+				min-width: 0;
+				"
 		/>
 	</div>
 </template>
@@ -143,12 +149,13 @@ export default {
 }
 
 .app-container {
+	
 	display: grid;
 	grid-template-columns: 200px 200px 200px auto 0px;
 	grid-template-rows: 80px 10px 60px 60px auto;
 	grid-gap: 20px;
+
 	padding: 20px;
-	/* margin: 20px; */
 }
 
 .grid-container-inner {
@@ -166,10 +173,35 @@ export default {
 .action {
 	display: block;
 	line-height: 50px;
+	min-width: 100px;
 	text-align: center;
 	font-weight: 900;
 	color: #999;
 	/* border-bottom: 1px solid#999; */
+	
+	white-space:nowrap;
+	cursor: pointer;
+}
+
+.tab-action {
+	margin-top: auto;
+	line-height: 4px;
+	margin-left: 4px;
+	margin-right: 4px;
+	font-weight: 900;
+	color: white;
+	background: rgb(183, 183, 183);
+	cursor: pointer;
+}
+
+.tab-action-selected{
+	margin-top: auto;
+	line-height: 4px;
+	margin-left: 4px;
+	margin-right: 4px;
+	font-weight: 900;
+	color: white;
+	background: #fdaf06e1;
 	cursor: pointer;
 }
 

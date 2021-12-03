@@ -40,7 +40,7 @@ export default {
  
     data() {
         return {
-            
+            isLoading: false
         }
     },
  
@@ -56,6 +56,12 @@ export default {
             });
         },
 
+
+        setIsLoading(flag){
+
+            this.isLoading = flag;
+        }
+
     }
 
 };
@@ -67,4 +73,8 @@ export default {
 
         margin-right: 20px;
     }
+/* 
+    .action:disabled {
+        background: #dddddd;
+    } */
 </style>
