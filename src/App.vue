@@ -114,6 +114,7 @@ export default {
 </script>
 
 <style>
+
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -149,7 +150,6 @@ export default {
 }
 
 .app-container {
-	
 	display: grid;
 	grid-template-columns: 200px 200px 200px auto 0px;
 	grid-template-rows: 80px 10px 60px 60px auto;
@@ -165,6 +165,75 @@ export default {
 	grid-gap: 20px;
 }
 
+.page-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.page-header {
+	/* grid-column-start: 2;
+	grid-column-end: 6; */
+	display: block;
+	line-height: 100px;
+	text-align: center;
+	font-size: 180%;
+	font-weight: 900;
+	/* margin-left: 30px; */
+	color: rgb(180, 180, 180);
+	background: white;
+}
+
+.component-wrapper {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	/* 
+		TODO:
+
+			(dec 2021) 
+		
+			[ ] height is nu bepaald met absolute waardes
+				- idee is dat de wrapper de overgebleven ruimte op het scherm vult
+				- mogelijke oplossing: https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space
+
+	*/
+	height: calc(100vh - 140px);
+	width: 100% !important;
+	overflow-x: scroll;
+}
+
+.component-wrapper-center {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: start;
+	
+	/* 
+		TODO:
+
+			(dec 2021) 
+		
+			[ ] height is nu bepaald met absolute waardes
+				- idee is dat de wrapper de overgebleven ruimte op het scherm vult
+				- mogelijke oplossing: https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space
+
+	*/
+	height: calc(100vh - 140px);
+	width: 100% !important;
+}
+
+.option-picker {
+	display: inline-grid;
+	/* margin-left: 30px; */
+	grid-template-rows: 60px 60px;
+}
+
+.overlay-wrapper {
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+
 .grid-column {
 	display: inline-grid;
 	grid-template-rows: 60px 60px;
@@ -177,8 +246,6 @@ export default {
 	text-align: center;
 	font-weight: 900;
 	color: #999;
-	/* border-bottom: 1px solid#999; */
-	
 	white-space:nowrap;
 	cursor: pointer;
 }
@@ -228,24 +295,17 @@ export default {
 	font-weight: 500;
 	color: #999;
 	background: white;
-	/* cursor: pointer; */
 }
 
-.page-header {
-	grid-column-start: 2;
-	grid-column-end: 6;
-
-	display: block;
-	line-height: 100px;
-	text-align: center;
-	font-size: 180%;
-	font-weight: 900;
-	margin-left: 30px;
-	/* color: white; */
-	color: rgb(180, 180, 180);
-	/* background: rgb(180, 180, 180); */
-	background: white;
-	/* border-bottom: 1px solid#999; */
+.loading-screen {
+	position: absolute;
+	top:0;
+	z-index: 1000;
+	white-space: pre;
+	display: flex;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.6);
+	width: 100%;
+	height: 100%;
 }
-
 </style>

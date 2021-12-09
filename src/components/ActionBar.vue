@@ -1,7 +1,10 @@
 <template>
-    <div class="grid-column">
+    <div class="action-layout">
 
-        <div v-for="action in actions" :key="action.name" style="text-align: left;">
+        <div 
+            v-for="action in actions" 
+            :key="action.name"
+        >
 
             <!-- execute callback -->
             <label 
@@ -69,11 +72,12 @@ export default {
  
  
 <style>
-    .grid-column{
-
-        margin-right: 20px;
+    .action-layout{
+        display: table;
+        margin-top: 50px;
+        margin-left: 20px;
     }
-/* 
+    /* 
     .action:disabled {
         background: #dddddd;
     } */

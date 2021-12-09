@@ -1,31 +1,17 @@
+<!--
+
+    TODO:
+
+    [ ] this.actions should allow multiple actions
+        - is currently a single string instead of an array
+
+    
+-->
 <template>
     <div
         style="position:relative"
     >
     <table cellspacing="0" cellpadding="0">
-
-        <!--
-            add append button on top (if editable)
-        -->
-        <!-- <tr v-if="editable">
-            <td 
-                style="text-align:right; padding:6px; background:white;"
-                :colspan="headerRecord.length"
-            > 
-                <!- - ...
-                    class="fas fa-plus"
-                    ...
-                - ->
-                <button
-                    id="add-button"
-                    @click="addRecord"
-                >
-                +
-                </button>
-            </td>
-            <td>
-            </td>
-        </tr> -->
 
         <!-- 
             render headers
@@ -40,12 +26,6 @@
         </tr>
         <tr><td> &nbsp; </td></tr>
 
-        <!--
-            if no data
-        -->
-        <!-- <template
-            v-else-if="dataRecords.length==0"
-        > -->
         <template
             v-if="dataRecords.length==0 && !isLoading"
         >
@@ -67,6 +47,7 @@
                 return ! property.hidden;
             })"
         >
+
             <!-- 
                 render content panels 
             -->
@@ -77,6 +58,7 @@
                     <TabPanel :data="record.infoValues[record.showIndex]" />
                 </td>
             </tr>
+            
             <!-- 
                 render main data records 
             -->
@@ -87,7 +69,8 @@
                     :key="cellIndex"
                 >
                     <td 
-                        v-if="!item.action && !record.expanded" 
+                        v-if="!item.action && !record.expanded"
+                        v-bind:class="[ {'td-align-top': actions !== 'expand' } ]"
                     >
                         <input
                             v-if="editable==true"
@@ -101,7 +84,15 @@
                                 margin-top:12px;
                             "
                         />
-                        <div v-else>
+                        <div 
+                            v-else
+                            style="
+                                background:white;
+                                color: black;
+                                margin-left: 10px;
+                                margin-right: 20px;
+                            "
+                        >
                             <div>{{item.value}}</div>
                         </div>
                     </td>
@@ -266,6 +257,7 @@
         </template>
     </table>
 
+    <!-- 
     <div 
         v-if="isLoading"
         class="loading-screen"
@@ -273,7 +265,7 @@
         <div style="font-size: large;">
             loading ...
         </div>
-    </div>
+    </div> -->
 
     </div>
 </template>
@@ -438,6 +430,16 @@ export default {
         font-weight: 250;
     }
 
+    .td-align-top {
+        vertical-align: super;
+        height: inherit;
+        white-space:pre;
+        padding: 0px 0px;
+        border-spacing: 0px;
+        color: rgb(56, 56, 56);
+        font-weight: 250;
+    }
+
     .td-blurred {
         
         padding: 0px 0px;
@@ -533,28 +535,6 @@ export default {
         color: #fdaf06e1;
     }
 
-    .loading-screen {
-        
-        white-space: pre;
-        display: flex;
-        justify-content: center;
-        
-        background:rgba(255, 255, 255, 0.6);
-       
-        width:100%;
-        
-        /* 
-            [ ] harde waarde is lelijk, hoe oplossen?
-            
-                - 'height = 100%' werkt ook niet (want deze waarde beweegt niet mee met de parent container)
-        */
-        height: 1000vh;
-        
-        position:absolute;
-        top:0;
-        /* left: 0%; */
-        z-index: 100;
-    }
 
 /********************************
 

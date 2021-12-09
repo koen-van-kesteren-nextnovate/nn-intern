@@ -24,7 +24,6 @@ export default {
   .home {
     display: inline-block;
     justify-content: center;
-
     grid-row-start: 3;
     grid-column-start: 2;
     grid-column-end: 5;
@@ -35,7 +34,6 @@ export default {
   }
 
   .title {
-    
     justify-content: center;
     padding: 40px;
     color:#999;

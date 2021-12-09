@@ -8,21 +8,22 @@
 
 <template>
 	<div>
-        
     
-        <div class="grid-container-inner">
+        <!-- <div class="grid-container-inner"> -->
+        <div class="page-container">
 
-            <div class="page-header">
-                customers
-            </div>
-            
-            
-            <div class="customer-overview">
-                
-                <div v-for="customer in customers" :key="customer" style="text-align: center;">
-                    
-                    <label class="list-action" @click="goToPage('DnsResolver',{id:customer.id})"> {{ customer.customerName }} </label>
+            <div class="component-wrapper-center">
+
+                <div class="page-header">
+                    customers
                 </div>
+                
+                <div class="option-picker">
+                    <div v-for="customer in customers" :key="customer" style="text-align: center;">
+                        <label class="list-action" @click="goToPage('DnsResolver',{id:customer.id})"> {{ customer.customerName }} </label>
+                    </div>
+                </div>
+
             </div>
 
             <ActionBar 
@@ -52,6 +53,7 @@ export default {
             headers: ["customers"],
             actions: [ 
                 { name: 'AddCustomer', display: 'Add customer', type: 'route', route: 'AddCustomer' },
+                { name: 'cancel', display: 'Return', type: 'action', callback: this.cancel},
             ]
             // records:[{values:[{value: ''}]}],
             // customers: ['NextNovate', 'test 1', 'test 2']
@@ -111,6 +113,12 @@ export default {
                 (rv[x[key]] = rv[x[key]] || []).push(x);
                 return rv;
             }, {});
+        },
+
+
+        cancel(){
+
+            this.$router.go(-1);
         }
     },
 
@@ -153,14 +161,14 @@ export default {
         grid-column-end: 3;
     } */
 
-    .customer-overview {
+    /* .customer-overview {
         display: inline-grid;
         margin-left: 30px;
 	    grid-template-rows: 60px 60px;
         grid-row-start: 4;
         grid-column-start: 2;
         grid-column-end: 6;
-    }
+    } */
 
     .action-bar {
         grid-row-start: 3;

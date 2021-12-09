@@ -1,14 +1,9 @@
 
 <template>
 
-    <div class="grid-container-inner">
-       
-         
-        <ActionBar 
-            :actions="actions"
-            class="action-bar"
-        />
-
+    <!-- <div class="grid-container-inner"> -->
+    <div class="page-container">   
+        
         <!-- hidden (for file upload) -->
         <div>
             <input 
@@ -40,11 +35,19 @@
             </button> 
         </div>
 
-        <DataTable 
-            :headers="headers" 
-            :data="records" 
-            :editable="true"
-            class="data-table"
+
+        <div class="component-wrapper-center">
+            <DataTable 
+                :headers="headers" 
+                :data="records" 
+                :editable="true"
+                class="data-table"
+            />
+        </div>
+
+        <ActionBar 
+            :actions="actions"
+            class="action-bar"
         />
 
     </div>
@@ -71,7 +74,8 @@ export default {
             actions:[
                 { name: 'uploadCsv', display: 'Upload csv', type: 'action', callback: this.openFilePicker },
                 { name: 'processRecords', display: 'Submit', type: 'action', callback: this.processRecords
-                }
+                },
+                { name: 'cancel', display: 'Cancel', type: 'action', callback: this.cancel},
             ],
 
             headers: ["domain"],
@@ -195,6 +199,11 @@ export default {
 
             this.message = null;
             this.displayMessage = false;
+        },
+
+        cancel(){
+
+            this.$router.go(-1);
         }
     },
 

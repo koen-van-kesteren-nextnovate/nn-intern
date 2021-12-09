@@ -1,32 +1,35 @@
 <template>
-   
+    <!-- <div class="grid-container-inner"> -->
+    <div class="page-container">
 
-        <div 
-            
-            class="grid-container-inner"
-        >
+        <div class="component-wrapper-center">
+
             <div class="page-header">
                 Projects
             </div>
 
             <div 
                 v-if="projects.length"
-                class="project-overview"
+                class="option-picker"
             >
                 
-                    
-                    <div v-for="project in projects" :key="project.name" style="text-align: left;">
-                        <SingleProject :project="project" />
-                    </div>
+                <div 
+                    v-for="project in projects" 
+                    :key="project.name" 
+                    style="text-align: left;"
+                >
+                    <SingleProject :project="project" />
+                </div>
                 
             </div>
-
-            <ActionBar 
-                :actions="actions"
-                class="action-bar"
-            />
-            
         </div>
+        
+        <ActionBar 
+            :actions="actions"
+            class="action-bar"
+        />
+        
+    </div>
 </template>
 
 
@@ -49,8 +52,8 @@ export default {
 
         return {
 
-            actions: [ 
-                // { name: 'AddCustomer', display: 'Add customer', type: 'route', route: 'AddCustomer' },
+            actions: [
+                { name: 'cancel', display: 'Return', type: 'action', callback: this.cancel},
             ],
 
             projects: [
@@ -68,6 +71,16 @@ export default {
                 }
             ]
         }
+
+    },
+
+
+    methods: {
+
+        cancel(){
+
+            this.$router.go(-1);
+        }
     }
 }
 </script>
@@ -75,18 +88,9 @@ export default {
 
 <style scoped>
 
-    .project-overview {
-        display: inline-grid;
-        margin-left: 30px;
-	    grid-template-rows: 60px 60px;
-        grid-row-start: 4;
-        grid-column-start: 2;
-        grid-column-end: 6;
-    }
-
     .action-bar {
-        grid-row-start: 4;
+        /* grid-row-start: 4;
         grid-column-start: 7;
-        grid-column-end: 7;
+        grid-column-end: 7; */
     }
 </style>

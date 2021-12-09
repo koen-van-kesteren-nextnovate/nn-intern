@@ -1,23 +1,23 @@
 <template>
     <div>
-	<div style="display: contents;">
+	<!-- <div style="display: contents;"> -->
         <div class="test-container">
             <div class="table-wrapper">    
                 <table>
 
-                <tr>
-                    <td> {{text}} </td>
-                    <td> {{text}} </td>
-                    <td> {{text}} </td>
-                    <td> {{text}} </td>
+                    <tr>
+                        <td> {{text}} </td>
+                        <td> {{text}} </td>
+                        <td> {{text}} </td>
+                        <td> {{text}} </td>
                     </tr>
-            </table>
-        </div>
+                </table>
+            </div>
 
-        <div class="menu-bar">test test</div>
+            <div class="menu-bar">test test</div>
         </div>
     </div>
-    </div>
+    <!-- </div> -->
 </template>
 
 
@@ -62,12 +62,18 @@ export default {
 
     .table-wrapper {
 
+
+        display: flex;
+        flex-direction: row;
+        
+        border: 1px solid red;
+
         height: calc(100vh - 200px);
 
         width: 100% !important;
         overflow-x: scroll; 
 
-        border: 1px solid black;
+        /* border: 1px solid black; */
     }
 
     table {

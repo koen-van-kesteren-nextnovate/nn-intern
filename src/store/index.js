@@ -17,6 +17,10 @@ export default createStore({
                 {path: 'Projects', displayName: 'Projects'},
                 {path: 'DnsResolverOverview', displayName: 'Customers'}
             ],
+            'DnsResolverView2': [
+                {path: 'Projects', displayName: 'Projects'},
+                {path: 'DnsResolverOverview', displayName: 'Customers'}
+            ],
             'DnsUploader': [
                 {path: 'Projects', displayName: 'Projects'},
                 {path: 'DnsResolverOverview', displayName: 'Customers'},
@@ -94,8 +98,6 @@ export default createStore({
 
         addDnsRecord(state, data) {
 
-            // state.dnsRecords.push(data);
-            // Vue.set(state.dnsRecords, data.index, data.data);
             state.dnsRecords[data.index] = data.data;
         },
     },
