@@ -8,32 +8,57 @@ export default createStore({
 
         userPaths: {
             'AddCustomer': [
-                {path: 'DnsResolverOverview', displayName: 'Customers'}
+                {
+                    path: 'DnsResolverOverview', 
+                    displayName: 'Customers'
+                }
             ],
             'DnsResolverOverview': [
-                {path: 'Projects', displayName: 'Projects'}
+                {
+                    path: 'Projects', 
+                    displayName: 'Projects'
+                }
             ],
             'DnsResolver': [
-                {path: 'Projects', displayName: 'Projects'},
-                {path: 'DnsResolverOverview', displayName: 'Customers'}
+                {
+                    path: 'Projects', 
+                    displayName: 'Projects'
+                },
+                {
+                    path: 'DnsResolverOverview', 
+                    displayName: 'Customers'
+                }
             ],
             // 'DnsResolverView2': [
             //     {path: 'Projects', displayName: 'Projects'},
             //     {path: 'DnsResolverOverview', displayName: 'Customers'}
             // ],
             'DnsUploader': [
-                {path: 'Projects', displayName: 'Projects'},
-                {path: 'DnsResolverOverview', displayName: 'Customers'},
-                {path: 'DnsResolver', displayName: 'DNS records'},
+                {
+                    path: 'Projects', 
+                    displayName: 'Projects'
+                },
+                {
+                    path: 'DnsResolverOverview', 
+                    displayName: 'Customers'
+                },
+                {
+                    path: 'DnsResolver', 
+                    displayName: 'DNS records'
+                },
             ],
             'Projects': [],
             'Home': [
-                {path: 'Projects', displayName: 'Projects'}
+                {
+                    path: 'Projects', 
+                    displayName: 'Projects'
+                }
             ]
         }
     },
 
     
+
     getters: {
 
         customers: state => {
@@ -55,6 +80,7 @@ export default createStore({
             return state.userPath;
         }
     },
+
 
 
     mutations: {
@@ -84,13 +110,9 @@ export default createStore({
                 
                 updatedDomains.data = customer.domains.data.concat(data);
 
-                if(updatedDomains.data.length % 500 == 10) console.log(updatedDomains.data);
-
                 updatedDomains.nextPageToken = nextPageToken || null;
 
                 customer.domains = updatedDomains;
-
-                
             }
         },
 
@@ -106,6 +128,7 @@ export default createStore({
             state.dnsRecords[data.index] = data.data;
         },
     },
+
 
 
     actions: {
@@ -210,14 +233,14 @@ export default createStore({
 
             var url = 'https://dns-resolver-knfeh53ddq-ey.a.run.app/execute-manual-check?customerId='+customerId;
 
-            console.log('run');
             var response = await vm.axios.get(url);
 
-            console.log(response);
             return response;
         },
     },
 
+
+    
     modules: {
 
     }

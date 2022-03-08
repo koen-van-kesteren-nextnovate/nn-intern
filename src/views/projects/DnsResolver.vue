@@ -141,10 +141,6 @@ export default {
             // create table record for each domain
             this.customerDomains.forEach( domainItem => {
 
-                // if(this.customerDomains.length > 5000 ){
-                //     console.log(domainItem.domain);
-                // }
-
                 if(domainItem.records && domainItem.records.length > 0){
                         
                     let lastChange = '';
@@ -267,10 +263,6 @@ export default {
                     records.push(mainRecord);
                 }
             });
-            
-            // if(this.customerDomains.length > 5200 ){
-            //     console.log(records);
-            // }
 
             return records;
         },
@@ -454,9 +446,6 @@ export default {
                 */
                 let values = record.values;
 
-                console.log(values);
-                console.log(JSON.stringify(values));
-
                 data.push([
                         this.customerId,
                         
@@ -464,7 +453,6 @@ export default {
                         "\""+values[1].value+"\"",
                         "\""+values[2].value+"\"",
                         "\""+values[3].value+"\"",
-                        // "\""+values[4].value+"\"",
                         "\""+values[4].value.replace(/(\r\n|\n|\r)/gm, ",")+"\"",
                         "\""+values[5].value+"\"",
                         "\""+values[6].value.replace(/(\t)/gm, "")+"\""

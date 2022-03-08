@@ -17,10 +17,7 @@
                 >
                     <!-- {{contentData[index]}} -->
                     {{contentData[index].header.substr(0,10)}}
-                    <!-- ...
-                        class="fas fa-exclamation fa-xs"
-                        ...
-                    -->
+                    
                     <div 
                         v-if="contentData[index].alert"
                         style="color:red;font-weight:bold;"
@@ -34,10 +31,7 @@
                 >
                     <!-- {{contentData[index]}} -->
                     {{contentData[index].header.substr(0,10)}} 
-                    <!-- ...
-                        class="fas fa-exclamation fa-xs"
-                        ...
-                    -->
+                    
                     <div 
                         v-if="contentData[index].alert"
                         style="color:red;font-weight: bold;"

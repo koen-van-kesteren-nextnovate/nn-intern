@@ -121,10 +121,6 @@
                         <td 
                             v-else-if="item.action === 'expand'"
                         >
-                            <!-- ...
-                                class="fas fa-caret-square-down"
-                                ...
-                            -->
                             <button 
                                 v-if="!record.expanded"
                                 id="expand-action" 
@@ -132,10 +128,6 @@
                             >
                             ►
                             </button>
-                            <!-- ...
-                                class="fas fa-caret-square-up"
-                                ...    
-                            -->
                             <button 
                                 v-else
                                 id="expand-action"
@@ -203,10 +195,6 @@
                         <td 
                             v-if="editable"
                         >
-                            <!-- ...
-                                class="fas fa-trash"
-                                ...  
-                            -->
                             <button 
                                 id="remove-button"
                                 @click="removeRecord(index)"
@@ -214,7 +202,6 @@
                             >
                                 ✖
                             </button> 
-                            
                         </td>
                     </template>
                 </tr>
@@ -305,10 +292,6 @@ export default {
 
                 item.rowIndex = index;
             });
-
-            // if(this.data.length > 5200 ){
-            //     console.log(processedRecords);
-            // }
             
             return processedRecords;
         },
@@ -379,12 +362,12 @@ export default {
 
 
     created(){
-        // console.log(this.dataRecords.length);
+        
     },
 
 
     updated(){
-        // console.log(this.dataRecords.length);
+        
     }
    
 };

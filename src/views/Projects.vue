@@ -1,5 +1,5 @@
 <template>
-    <!-- <div class="grid-container-inner"> -->
+
     <div class="page-container">
 
         <div class="component-wrapper-center">
@@ -30,7 +30,9 @@
         />
         
     </div>
+
 </template>
+
 
 
 <script>
@@ -53,21 +55,26 @@ export default {
         return {
 
             actions: [
-                { name: 'cancel', display: 'Return', type: 'action', callback: this.cancel},
+                { 
+                    name: 'cancel', 
+                    display: 'Return', 
+                    type: 'action', 
+                    callback: this.cancel
+                },
             ],
 
             projects: [
                 {
-                'display': 'DNS Resolver',
-                'name': 'DnsResolverOverview',
-                'route': 'dns-resolver/dns-resolver-overview',
-                'description': 'Check DNS records for domains \n - Upload domain names for periodic updates' 
+                    'display': 'DNS Resolver',
+                    'name': 'DnsResolverOverview',
+                    'route': 'dns-resolver/dns-resolver-overview',
+                    'description': 'Check DNS records for domains \n - Upload domain names for periodic updates' 
                 },
                 {
-                'display': 'Test',
-                'name': 'TestLayout',
-                'route': 'test-layout',
-                'description': 'test test test'
+                    'display': 'Test',
+                    'name': 'TestLayout',
+                    'route': 'test-layout',
+                    'description': 'test test test'
                 }
             ]
         }
