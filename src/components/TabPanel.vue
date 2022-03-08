@@ -48,7 +48,7 @@
             </div>
         </div>
         <div
-            style="padding:6px;margin-left:10px;margin-top:4px;"
+            class="tab-content"
         >
             {{contentData[selectedTab].value}}
         </div>
@@ -117,6 +117,7 @@ export default {
         margin-right: 10px;
         border-bottom: 3px solid#999;
         padding:2px;
+        font-size: 14px;
     }
 
     .tab:hover {
@@ -128,10 +129,18 @@ export default {
         margin-right: 10px;
         border-bottom: 3px solid#fdaf06e1;
         padding:2px;
+        font-size: 14px;
     }
 
     .tab-selected:hover {
         color: #fdaf06e1;
+    }
+
+    .tab-content {
+        padding:6px;
+        margin-left:10px;
+        margin-top:4px;
+        font-size: 12px;
     }
     
 </style>

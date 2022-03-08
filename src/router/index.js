@@ -46,11 +46,11 @@ const routes = [
     name: 'DnsResolver',
     component: () => import('../views/projects/DnsResolver.vue')
   },
-  {
-    path: '/projects/dns-resolver-view2/:id',
-    name: 'DnsResolverView2',
-    component: () => import('../views/projects/DnsResolverView2.vue')
-  },
+  // {
+  //   path: '/projects/dns-resolver-view2/:id',
+  //   name: 'DnsResolverView2',
+  //   component: () => import('../views/projects/DnsResolverView2.vue')
+  // },
   {
     path: '/projects/dns-uploader/:id',
     name: 'DnsUploader',

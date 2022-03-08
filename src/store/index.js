@@ -17,10 +17,10 @@ export default createStore({
                 {path: 'Projects', displayName: 'Projects'},
                 {path: 'DnsResolverOverview', displayName: 'Customers'}
             ],
-            'DnsResolverView2': [
-                {path: 'Projects', displayName: 'Projects'},
-                {path: 'DnsResolverOverview', displayName: 'Customers'}
-            ],
+            // 'DnsResolverView2': [
+            //     {path: 'Projects', displayName: 'Projects'},
+            //     {path: 'DnsResolverOverview', displayName: 'Customers'}
+            // ],
             'DnsUploader': [
                 {path: 'Projects', displayName: 'Projects'},
                 {path: 'DnsResolverOverview', displayName: 'Customers'},
@@ -83,9 +83,14 @@ export default createStore({
                 };
                 
                 updatedDomains.data = customer.domains.data.concat(data);
+
+                if(updatedDomains.data.length % 500 == 10) console.log(updatedDomains.data);
+
                 updatedDomains.nextPageToken = nextPageToken || null;
 
                 customer.domains = updatedDomains;
+
+                
             }
         },
 
@@ -162,6 +167,7 @@ export default createStore({
 
         async fetchDomainData(context, { vm, params }){
 
+            let nextPageToken = null;
             let customerId = params.customerId;
             let customer = context.getters.customer(customerId);
 
@@ -169,22 +175,32 @@ export default createStore({
 
             if(customer && customer.domains && customer.domains.nextPageToken){
 
-                let nextPageToken = customer.domains.nextPageToken;
+                nextPageToken = customer.domains.nextPageToken;
                 url += '&nextPageToken='+nextPageToken;
             }
             
-            var response = await vm.axios.get(url);
+            try{
+                
+                var response = await vm.axios.get(url);
+                
+                context.commit(
+                    'setCustomerDomains', 
+                    {
+                        customerId: customerId, 
+                        data: response.data.data,
+                        nextPageToken: response.data.nextPageToken,
+                        pageSize: 5
+                    }
+                );
 
-            context.commit(
-                'setCustomerDomains', 
-                {
-                    customerId: customerId, 
-                    data: response.data.data,
-                    nextPageToken: response.data.nextPageToken
-                }
-            );
+                return response.data.nextPageToken;
+            }
+            catch(e){
+                console.log(e);
 
-            return response.data.nextPageToken;
+                // retry with same nextPageToken
+                return nextPageToken;
+            }
         },
 
 
@@ -194,8 +210,10 @@ export default createStore({
 
             var url = 'https://dns-resolver-knfeh53ddq-ey.a.run.app/execute-manual-check?customerId='+customerId;
 
+            console.log('run');
             var response = await vm.axios.get(url);
 
+            console.log(response);
             return response;
         },
     },

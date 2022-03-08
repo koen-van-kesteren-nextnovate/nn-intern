@@ -6,13 +6,24 @@
 			class="app-bar" 
 		>
 			<div
-				style="display:flex;padding:15px;margin-left:15px;"
+				style="
+					display:flex;
+					padding:15px;
+					margin-left:15px;"
 			>
 				<img 
-					alt="Vue logo" src="./assets/icon-on-yellow.svg"
+					alt="Vue logo" 
+					src="./assets/icon-on-yellow.svg"
 					style="height: 100%;"
 				/> 
-				<div style="height: 100%;margin-left:15px;vertical-align: middle;line-height:50px;font-weight:600;color:#999;">
+				<div style="
+					height: 100%;
+					margin-left:15px;
+					vertical-align: middle;
+					line-height:50px;
+					font-weight:600;
+					color:#999;"
+				>
 					NextNovate
 				</div>
 			</div>
@@ -154,7 +165,6 @@ export default {
 	grid-template-columns: 200px 200px 200px auto 0px;
 	grid-template-rows: 80px 10px 60px 60px auto;
 	grid-gap: 20px;
-
 	padding: 20px;
 }
 

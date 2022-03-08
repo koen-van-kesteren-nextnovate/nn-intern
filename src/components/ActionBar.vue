@@ -10,7 +10,7 @@
             <label 
                 v-if="action.type=='action'"
                 class="action" 
-                @click="action.callback"
+                @click="action.callback(action.params)"
             >
                 {{action.display}}
             </label>

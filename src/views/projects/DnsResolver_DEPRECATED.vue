@@ -1,9 +1,19 @@
 <template>
-	
+	<!--
+
+        TODO:
+
+        (dec 2021 Koen van Kesteren)
+
+        [ ] DnsResolverView2.vue zou hier aan toegevoegd moeten worden.
+
+            - Op de en of andere manier leidde dit nu nog tot vreemde resultaten en daarom is deze view tijdelijk in een aparte component geplaatst
+
+    -->
     <div class="page-container">
         
         <div v-bind:class="[ {'overlay-wrapper': isLoading }, 'component-wrapper' ]">
-
+            
             <DataTable
                 ref="dataTable"
                 :headers="tableHeaders" 
@@ -11,7 +21,7 @@
                 :actions="tableActions"
                 class="data-table"
             />
-
+            
             <div 
                 v-if="isLoading"
                 class="loading-screen"
@@ -22,7 +32,7 @@
             </div>
 
         </div>
-
+        
         <ActionBar 
             ref="actionBar"
             :actions="actions"
@@ -68,16 +78,16 @@ export default {
         return {
 
             customerId: '',
-            viewType: 'complete',
+            // viewType: 'complete',
             actions: [ 
-                { name: 'setToAll', display: 'View all scans', type: 'route', route: 'DnsResolver' },
+                { name: 'setToLast', display: 'View last scan', type: 'route', route: 'DnsResolverView2' },
                 { name: 'DnsUploader', display: 'Upload domains', type: 'route', route: 'DnsUploader' },
                 { name: 'runScan', display: 'Run scan', type: 'action', callback: this.runScan },
                 { name: 'download', display: 'Download', type: 'action', callback: this.download },
             ],
 
-            tableHeaders: ['domain','spf','dkim','dmarc','scan date','last change'],
-            tableActions: '',
+            tableHeaders: ['domain','spf records','dkim records','dmarc records','last scan','last change'],
+            tableActions: 'expand',
 
             displayMessage: false,
             message: '',
@@ -102,13 +112,13 @@ export default {
 
 
         dnsRecords() {
- 
+
             let records = [];
-           
+
             // create table record for each domain
             this.customerDomains.forEach( domainItem => {
                 if(domainItem.records && domainItem.records.length > 0){
-
+                        
                     let lastChange = '';
 
                     // determine DNS content
@@ -121,66 +131,87 @@ export default {
                     // contentPanel: extract snapshots for each dns type (ordered by date)
                     let sorted = domainItem.records.sort((a, b) => (a.scanDate > b.scanDate) ? 1 : -1);
 
-                    // check for mutations
-                    let spfLastChange = '-', dkimLastChange='-', dmarcLastChange='-';
-                    sorted.forEach( (item, index) => {
-                        console.log('\n ');
-                        if(index > 0){
+                    sorted.forEach( item => {
 
-                            // console.log(domainItem.domain, item.scanDate);
-                            if(this.checkRecordChange(sorted[index-1], item, 'spf') ){
-                                // console.log(domainItem.domain, item.scanDate);
-                                // console.log(item.spf);
-                                // console.log(sorted[index-1].spf);
-                                spfLastChange = item.scanDate.substr(0, 10);
-                            }
+                        // contentPanel-tab: create the snapshot content per type and date
+                        let spfString = '', dkimString = '', dmarcString = '';
+                        if(item.spf){
+                            item.spf.forEach( line => {
+                                let newLines = line.match(/.{1,100}/g);
+                                if(newLines) spfString += newLines.join('\n\t') + '\n\n';
+                            });
+                        }
+                        if(item.dkim){
+                            item.dkim.forEach( line => {
+                                let newLines = line.match(/.{1,100}/g);
+                                if(newLines) dkimString += newLines.join('\n\t') + '\n\n';
+                            });
+                        }
+                        if(item.dmarc){ 
+                            item.dmarc.forEach( line => {
+                                let newLines = line.match(/.{1,100}/g);
+                                if(newLines) dmarcString += newLines.join('\n\t') + '\n\n';
+                            });
+                        }
+                        // add snapshot
+                        spfSnapshots.push({
+                            header: item.scanDate,
+                            value: spfString
+                        });
+                        dkimSnapshots.push({
+                            header: item.scanDate,
+                            value: dkimString
+                        });
+                        dmarcSnapshots.push({
+                            header: item.scanDate,
+                            value: dmarcString
+                        });
+                    });
 
-                            if(this.checkRecordChange(sorted[index-1], item, 'dkim') ){
-                                dkimLastChange = item.scanDate.substr(0, 10);
-                            }
-
-                            if(this.checkRecordChange(sorted[index-1], item, 'dmarc') ){
-                                dmarcLastChange = item.scanDate.substr(0, 10);
+                    // check for mutations in snapshots
+                    spfSnapshots.forEach( (snapshot, index) => {
+                        if( index > 0 && snapshot.value != spfSnapshots[index-1].value ){
+                            snapshot.alert = true;
+                            if(lastChange === '' || snapshot.header > lastChange){
+                                lastChange = snapshot.header
                             }
                         }
                     });
 
-                    let lastItem = sorted[sorted.length-1];
-                    // console.log(lastItem);
+                    dkimSnapshots.forEach( (snapshot, index) => {
+                        if( index > 0 && snapshot.value != dkimSnapshots[index-1].value ){
+                            snapshot.alert = true;
+                            if(lastChange === '' || snapshot.header > lastChange){
+                                lastChange = snapshot.header
+                            }
+                        }
+                    });
 
-                    let spfString = '', dkimString = '', dmarcString = '';
-                    if(lastItem.spf){
-                        lastItem.spf.forEach( line => {
-                            let newLines = line.match(/.{1,35}/g);
-                            if(newLines) spfString += newLines.join('\n') + '\n\n';
-                        });
-                    }
-                    if(lastItem.dkim){
-                        lastItem.dkim.forEach( line => {
-                            let newLines = line.match(/.{1,35}/g);
-                            if(newLines) dkimString += newLines.join('\n') + '\n\n';
-                        });
-                    }
-                    if(lastItem.dmarc){ 
-                        lastItem.dmarc.forEach( line => {
-                            let newLines = line.match(/.{1,35}/g);
-                            if(newLines) dmarcString += newLines.join('\n') + '\n\n';
-                        });
-                    }
-                    
+                    dmarcSnapshots.forEach( (snapshot, index) => {
+                        if( index > 0 && snapshot.value != dmarcSnapshots[index-1].value ){
+                            snapshot.alert = true;
+                            if(lastChange === '' || snapshot.header > lastChange){
+                                lastChange = snapshot.header
+                            }
+                        }
+                    });
 
                     // create the main data record
                     let mainRecord = {
                         values:[
                             {value: domainItem.domain},
-                            
-                            {value: spfString},
-                            {value: dkimString},
-                            {value: dmarcString},
-                            {value: lastItem.scanDate.substr(0, 10)},
-                            {value: "spf: \t\t"+spfLastChange+"\ndkim: \t"+dkimLastChange+"\ndmarc: \t"+dmarcLastChange},
-                            
+                            {value: spfAvailable, action: 'info'},
+                            {value: dkimAvailable, action: 'info'},
+                            {value: dmarcAvailable, action: 'info'},
+                            {value: sorted[sorted.length-1].scanDate.substr(0, 10)},
+                            {value: lastChange.substr(0, 10)},
                         ]
+                    };
+
+                    // create the contentPanel
+                    mainRecord.contentPanel = {
+                        infoValues: [null, spfSnapshots, dkimSnapshots, dmarcSnapshots ],
+                        showIndex: 1
                     };
 
                     records.push(mainRecord);
@@ -194,24 +225,17 @@ export default {
 
     methods: {
 
-        checkRecordChange(scan1, scan2, type){
-
-            // console.log(scan1[type], scan2[type]);
-
-            if(
-                (scan1[type] && scan2[type] && scan1[type][0] != scan2[type][0]) 
-                || (scan1[type] && !scan2[type]) 
-                || (scan2[type] && !scan1[type])
-            ){
-                return true;
-            }
-        },
+        // [ ] TODO: zie boven
+        // setView(type){
+        //     console.log(' set view ', type);
+        //     this.viewType = type;
+        // },
 
 
         async runScan(){
 
             try{
-
+                
                 this.isLoading = true;
 
                 this.message = 'DNS scan in progress, please check back in a couple of minutes and refresh this page';
@@ -355,7 +379,7 @@ export default {
 
 
     mounted() {
-        
+
         this.isLoading = true;
     }
 };
@@ -366,7 +390,7 @@ export default {
 
     /* .data-table {
         grid-row-start: 2;
-        grid-column-start: 1;
+        grid-column-start: 2;
         grid-column-end: 5;
     } */
 
@@ -375,7 +399,6 @@ export default {
         grid-column-start: 6;
         grid-column-end: 6;
     } */
-
 
     .result-dialog {
         white-space: pre;
@@ -392,4 +415,5 @@ export default {
         left: 20%;
         z-index: 100;
     }
+
 </style>
